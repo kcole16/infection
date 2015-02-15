@@ -48,15 +48,6 @@ def make_fake_relationships():
             student.save()
             students_left -= 1
             count += 1
-
-    # for user in users:
-    #     for student in user.coaches:
-    #         student.is_coached_by.append(user)
-        # count = 0
-        # while count < randint(0,user_count/4):
-        #     user.is_coached_by.append(users[randint(0,user_count-1)])
-        #     user.save()
-        #     count += 1
     print "Done"
 
 def generate_fake_users(number):

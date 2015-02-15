@@ -16,9 +16,9 @@
         <div class="center-block main">
           <h1>Infection</h1><br>
           {% if coach.infected %}
-          <p class="lead" style="color:red;">Coach: {{ coach }}</p>
+          <p class="lead" style="color:red;">Coach: User (coach)</p>
           {% else %}
-          <p class="lead">Coach: {{ coach }}</p>
+          <p class="lead">Coach: User (coach)</p>
           {% endif %}
           <td><button id="{{ coach.id }}" class="btn btn-success">Estimate Infection</button></td>
           <td><button id="{{ coach.id }}" class="btn btn-danger">Start Infection</button></td><br>
@@ -34,9 +34,9 @@
             {% for student in students %}
             <tr>
               {% if student.infected %}
-              <td style="color:red;">{{ student }}</td>
+              <td style="color:red;">User (student)</td>
               {% else %}
-              <td>{{ student }}</td>
+              <td>User (student)</td>
               {% endif %}
               <td><button id="{{ student.id }}" class="btn btn-success">Estimate Infection</button></td>
               <td><button id="{{ student.id }}" class="btn btn-danger">Start Infection</button></td>

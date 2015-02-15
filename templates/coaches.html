@@ -15,14 +15,14 @@
       <div class="center-block">
         <div class="center-block main" style="max-width:500px;">
           <h1>Infection</h1><br>
-          <p class="lead">Infect your users</p><br>
+          <p class="lead">A/B Testing Algorithm</p><br>
           {% if coaches != [] %}
           <div class="list-group">
           {% for coach in coaches %}
             {% if coach.infected %}
-              <a href="/coach/{{ coach.id }}/" class="list-group-item" style="color:red;">User(coach) </a>
+              <a href="/coach/{{ coach.id }}/" class="list-group-item" style="color:red;">User (coach) </a>
             {% else %}
-              <a href="/coach/{{ coach.id }}/" class="list-group-item" >User(coach) </a>
+              <a href="/coach/{{ coach.id }}/" class="list-group-item" >User (coach) </a>
             {% endif %}
           {% endfor %}
         </div><br>
