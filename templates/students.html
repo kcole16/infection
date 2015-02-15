@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/infect.js') }}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  </head>
+
+  <body>
+    <center>
+      <div class="container-fluid center-block">
+      <div class="center-block">
+        <div class="center-block main">
+          <h1>Infection</h1><br>
+          {% if coach.infected %}
+          <p class="lead" style="color:red;">Coach: {{ coach }}</p><br>
+          {% else %}
+          <p class="lead">Coach: {{ coach }}</p><br>
+          {% endif %}
+          <table class="table">
+            <tr>
+              <th>Student</th>
+              <th>Estimate Infection</th>
+              <th>Start Infection</th>
+            </tr>
+            {% for student in students %}
+            <tr>
+              {% if student.infected %}
+              <td style="color:red;">{{ student }}</td>
+              {% else %}
+              <td>{{ student }}</td>
+              {% endif %}
+              <td><button id="{{ student.id }}" class="btn btn-success">Estimate Infection</button></td>
+              <td><button id="{{ student.id }}" class="btn btn-danger">Start Infection</button></td>
+            </tr>
+          {% endfor %}
+        </table>
+        <label class="fake_results">Infecting this user will infect <strong class="fake_infected"></strong> total users</label>
+        <label class="results">There are now <strong class="infected"></strong> total infected users</label>
+<!--             <form role="form" action="/get_info" method="POST" style="width:300px;">
+              <div class="form-group">
+                <input class="form-control" style="width:300px;"type="text" name="name" placeholder="Enter a company: (Google, Facebook, etc.)" required >
+              </div>
+              <div class="form-group">
+              <button class="btn btn-success btn-block">Retrieve Stats</button>
+            </div>
+            </form> -->
+          <div class="container">
+          </div>
+        </div>
+      </div>
+    </div>
+  </center>
+
+
+  </body>
+
+</html>
