@@ -16,10 +16,15 @@
         <div class="center-block main">
           <h1>Infection</h1><br>
           {% if coach.infected %}
-          <p class="lead" style="color:red;">Coach: {{ coach }}</p><br>
+          <p class="lead" style="color:red;">Coach: {{ coach }}</p>
           {% else %}
-          <p class="lead">Coach: {{ coach }}</p><br>
+          <p class="lead">Coach: {{ coach }}</p>
           {% endif %}
+          <td><button id="{{ coach.id }}" class="btn btn-success">Estimate Infection</button></td>
+          <td><button id="{{ coach.id }}" class="btn btn-danger">Start Infection</button></td><br>
+          <br>
+        <label class="fake_results">Infecting this user will infect <strong class="fake_infected"></strong> total users</label>
+        <label class="results">There are now <strong class="infected"></strong> total infected users</label>
           <table class="table">
             <tr>
               <th>Student</th>
@@ -38,16 +43,6 @@
             </tr>
           {% endfor %}
         </table>
-        <label class="fake_results">Infecting this user will infect <strong class="fake_infected"></strong> total users</label>
-        <label class="results">There are now <strong class="infected"></strong> total infected users</label>
-<!--             <form role="form" action="/get_info" method="POST" style="width:300px;">
-              <div class="form-group">
-                <input class="form-control" style="width:300px;"type="text" name="name" placeholder="Enter a company: (Google, Facebook, etc.)" required >
-              </div>
-              <div class="form-group">
-              <button class="btn btn-success btn-block">Retrieve Stats</button>
-            </div>
-            </form> -->
           <div class="container">
           </div>
         </div>

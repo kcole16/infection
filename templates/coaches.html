@@ -13,19 +13,19 @@
     <center>
       <div class="container-fluid center-block">
       <div class="center-block">
-        <div class="center-block main">
+        <div class="center-block main" style="max-width:500px;">
           <h1>Infection</h1><br>
           <p class="lead">Infect your users</p><br>
           {% if coaches != [] %}
-          <ol>
+          <div class="list-group">
           {% for coach in coaches %}
             {% if coach.infected %}
-              <li><a href="/coach/{{ coach.id }}/" style="color:red;">{{coach}} </a></li>
+              <a href="/coach/{{ coach.id }}/" class="list-group-item" style="color:red;">User(coach) </a>
             {% else %}
-              <li><a href="/coach/{{ coach.id }}/">{{coach}} </a></li>
+              <a href="/coach/{{ coach.id }}/" class="list-group-item" >User(coach) </a>
             {% endif %}
           {% endfor %}
-        </ol>
+        </div><br>
         <button class="btn btn-success total_infection">Infect All</button>
         <button class="btn btn-success disinfect">Disinfect All</button>
 
