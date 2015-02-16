@@ -30,4 +30,14 @@
             }
           });
      });
+    $('.clear').click( function() {
+        $.ajax({
+            url: '/clear_users/',
+            type: 'get',
+            success: function(response){
+              console.log(response);
+              location.reload();
+            }
+          });
+     });
   });

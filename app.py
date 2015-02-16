@@ -19,11 +19,12 @@ class RegexConverter(BaseConverter):
 app.url_map.converters['regex'] = RegexConverter
 
 @app.route('/', methods=['GET', 'POST'])
-def index():
+def coaches():
     users = User.objects.all()
+    num_infected = len(User.objects.filter(infected=True))
     coaches = [user for user in users if user.coaches != []]
     
-    return render_template('coaches.html', coaches=coaches)
+    return render_template('coaches.html', coaches=coaches, num_infected=num_infected)
 
 @app.route('/coach/<regex(".+"):coach_id>/', methods=['GET', 'POST'])
 def students(coach_id):
@@ -66,6 +67,13 @@ def total_infection():
 def disinfect():
     number = utils.disinfect()
     return jsonify(infected=number)
+
+@app.route('/clear_users/', methods=['GET'])
+def clear_users():
+    users = User.objects.all()
+    for user in users:
+        user.delete()
+    return jsonify(users="deleted")
 
 @app.route('/create_fake_users/', methods=['GET'])
 def create_fake_users():
