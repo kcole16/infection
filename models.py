@@ -15,7 +15,7 @@ class User(db.Document):
         'ordering': ['-created_at']
     }
 
-    def infect_users(self):
+    def _infect_related(self):
         if self.coaches != None and self.is_coached_by != None:
             for user in self.coaches:
                 if user.infected:
@@ -43,7 +43,7 @@ class User(db.Document):
             print "Done"
 
 
-    def fake_infect_users(self):
+    def _fake_infect_related(self):
         if self.coaches != None and self.is_coached_by != None:
             for user in self.coaches:
                 if user.fake_infected:
@@ -74,11 +74,11 @@ class User(db.Document):
         if fake:
             self.fake_infected = True
             self.save()
-            self.fake_infect_users()
+            self._fake_infect_related()
         else:
             self.infected = True
             self.save()
-            self.infect_users()
+            self._infect_related()
 
 
 
