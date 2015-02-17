@@ -50,13 +50,18 @@ def make_fake_relationships():
             count += 1
     print "Done"
 
-def generate_fake_users(number):
+def generate_fake_users(number, test_case=False):
+    fake_users = []
     fake_user_count = 0
     while (fake_user_count < int(number)):
-        fake_user = User()
+        if test_case:
+            fake_user = User(test_case=True)
+        else:
+            fake_user = User()
         fake_user.save()
+        fake_users.append(fake_user)
         fake_user_count += 1
-    return fake_user_count
+    return fake_users
 
 def estimate_infection(user_id):
     user = User.objects.get(id=user_id)

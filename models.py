@@ -8,6 +8,7 @@ class User(db.Document):
     fake_infected = db.BooleanField(default=False)
     coaches = db.ListField(db.ReferenceField('User'))
     is_coached_by = db.ListField(db.ReferenceField('User'))
+    test_case = db.BooleanField(default=False)
 
     meta = {
         'indexes': ['coaches', 'is_coached_by'],

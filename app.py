@@ -77,7 +77,7 @@ def clear_users():
 
 @app.route('/create_fake_users/', methods=['GET'])
 def create_fake_users():
-    fake_user_count = utils.generate_fake_users(100)
+    fake_user_count = len(utils.generate_fake_users(100))
     utils.make_fake_relationships()
 
     return jsonify(fake_users=fake_user_count)
