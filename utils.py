@@ -48,8 +48,7 @@ def make_fake_relationships():
             student.save()
             students_left -= 1
             count += 1
-    print "Done"
-
+            
 def generate_fake_users(number, test_case=False):
     fake_users = []
     fake_user_count = 0
