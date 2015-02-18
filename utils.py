@@ -3,6 +3,8 @@ from models import User
 
 
 def total_infection():
+    '''Infects all users'''
+
     users = User.objects.all()
     infection_count = len(users)
 
@@ -13,6 +15,8 @@ def total_infection():
     return infection_count
 
 def disinfect(fake=False):
+    '''Disinfects all users'''
+
     users = User.objects.all()
     disinfect_count = len(users)
 
@@ -26,11 +30,16 @@ def disinfect(fake=False):
     return disinfect_count
 
 def get_coaches():
+    '''Returns list of coaches'''
+
     users = User.objects.all()
     coaches = [user for user in users if user.coaches != []]
     return coaches
 
 def make_fake_relationships():
+    '''Makes random mock relationships
+    between users'''
+
     users = User.objects.all()
     user_count = len(users)
     num_coaches = randint(1,user_count/5)
@@ -51,6 +60,8 @@ def make_fake_relationships():
             count += 1
             
 def generate_fake_users(number, test_case=False):
+    '''Creates fake users in db'''
+
     fake_users = []
     fake_user_count = 0
     
@@ -65,20 +76,26 @@ def generate_fake_users(number, test_case=False):
         
     return fake_users
 
-def estimate_infection(user_id):
+def start_infection(user_id, fake=False):
+    '''Start infection with given user, 
+    return total infection count'''
+
     user = User.objects.get(id=user_id)
-    fake_infection(user)
+    if fake:
+        user.infect(fake=True)
+    else:
+        user.infect()
+    number_infected = len(User.objects.filter(infected=True))
+    return number_infected
+
+def estimate_infection(user_id):
+    '''Runs infect() with fake=True flag, 
+    counts magnitude of infection, disinfects'''
+
+    start_infection(user_id, fake=True)
     number_infected = len(User.objects.filter(fake_infected=True))
     disinfect(fake=True)
     return number_infected
 
-def fake_infection(user):
-    user.infect(fake=True)
-
-def start_infection(user_id):
-    user = User.objects.get(id=user_id)
-    user.infect()
-    number_infected = len(User.objects.filter(infected=True))
-    return number_infected
 
 

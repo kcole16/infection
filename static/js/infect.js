@@ -10,7 +10,10 @@ $(document).ready(function() {
             success: function(response){
                 $('.infected').text(response['total_infected'])
                 $('.fake_results').hide();
-                location.reload();
+                $('.results').show();
+                setTimeout(function(){
+                    location.reload();
+                }, 3500);
             }
         });
     });

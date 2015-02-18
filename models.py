@@ -16,6 +16,9 @@ class User(db.Document):
     }
 
     def _infect_related(self):
+        '''Recursively searches through users related to parent User.
+        If User is infected, moves on. Else, calls infect'''
+
         if self.coaches != None and self.is_coached_by != None:
             for user in self.coaches:
                 if user.infected:
@@ -44,6 +47,8 @@ class User(db.Document):
 
 
     def _fake_infect_related(self):
+        '''Same as _infect_related, but with fake=True flag'''
+        
         if self.coaches != None and self.is_coached_by != None:
             for user in self.coaches:
                 if user.fake_infected:
@@ -71,6 +76,8 @@ class User(db.Document):
             print "Done"
 
     def infect(self, fake=False):
+        '''Starts infection with parent User'''
+
         if fake:
             self.fake_infected = True
             self.save()

@@ -52,12 +52,6 @@ def start_infection():
     number_infected = utils.start_infection(user)
     return jsonify(total_infected=number_infected)
 
-@app.route('/fake_infection/', methods=['GET'])
-def fake_infection():
-    user = request.args['user']
-    utils.fake_infection()
-    return jsonify(infected="done")
-
 @app.route('/total_infection/', methods=['GET'])
 def total_infection():
     number = utils.total_infection()

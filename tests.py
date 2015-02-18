@@ -8,57 +8,83 @@ import unittest
 import os
 import time
 
-def disinfect(user):
-	user.infected = False
-	user.save()
+def setUp():
+	''' Creates Users with multiple coaching/is_coached_by 
+	relationships to test with'''
 
-def get_infection_count():
-	infected_users = User.objects.filter(infected=True, test_case=True)
-	infected_user_count = infected_users.count()
-	map(lambda x: disinfect(x), infected_users)
-
-	print infected_user_count
-	
-	return infected_user_count
-
-class InfectionTest(unittest.TestCase):
 	users = generate_fake_users(5, test_case=True)
 	master_coach = users.pop()
 	coach = users.pop()
 	master_coach.coaches.append(coach)
 	master_coach.save()
 	coach.is_coached_by.append(master_coach)
-	objects = [master_coach, coach]+users
 	for user in users:
 		user.is_coached_by.append(coach)
 		user.save()
 		coach.coaches.append(user)
 		coach.save()
+	return master_coach, coach, users
 
-	# def _get_infection_count(self):
-	# 	infected_users = User.objects.filter(infected=True, test_case=True)
-	# 	infected_user_count = infected_users.count()
-	# 	map(lambda x: self._disinfect(x), infected_users)
-		
-	# 	return infected_user_count
+def tearDown():
+	'''Deletes test_case Users'''
 
-	def testInfection(self):
-		expected_infection_count = (User.objects.filter(test_case=True).count()*5)
-		infected_count = 0
-		for obj in self.objects:
-			obj.infect()
-			time.sleep(5)
-			infected_count += get_infection_count()
-		User.objects.filter(test_case=True).delete()
+	User.objects.filter(test_case=True).delete()
+
+def test_infection(user, fake=False):
+	'''Runs infect() on a given users, compares effects to test_case count.
+	All users are expected to receive infection'''
+
+	expected_infection_count = User.objects.filter(test_case=True).count()
+	if fake:
+		user.infect(fake=True)
+		infected_count = User.objects.filter(test_case=True, fake_infected=True).count()
+	else:
+		user.infect()
+		infected_count = User.objects.filter(test_case=True, infected=True).count()
+	tearDown()
+	return expected_infection_count, infected_count
+
+class InfectionTest(unittest.TestCase):
+
+	def testMasterCoachInfection(self):
+		'''Tests infection starting with User 
+		with only coaches relationships'''
+
+		master_coach, coach, users = setUp()
+		expected_infection_count, infected_count = test_infection(master_coach)
 		self.assertEqual(expected_infection_count, infected_count)
 
+	def testCoachInfection(self):
+		'''Tests User with both coaches and is_coached_by relationships'''
+
+		master_coach, coach, users = setUp()
+		expected_infection_count, infected_count = test_infection(coach)
+		self.assertEqual(expected_infection_count, infected_count)
+
+	def testUserInfection(self):
+		'''Tests one of users with only is_coached_by relationships'''
+
+		master_coach, coach, users = setUp()
+		expected_infection_count, infected_count = test_infection(users[1])
+		self.assertEqual(expected_infection_count, infected_count)
+
+	def testFakeMasterCoachInfection(self):
+		'''Tests fake_infect() method'''
+		
+		master_coach, coach, users = setUp()
+		expected_infection_count, infected_count = test_infection(master_coach, fake=True)
+		self.assertEqual(expected_infection_count, infected_count)
+
+	def testFakeCoachInfection(self):
+		master_coach, coach, users = setUp()
+		expected_infection_count, infected_count = test_infection(coach, fake=True)
+		self.assertEqual(expected_infection_count, infected_count)
+
+	def testFakeUserInfection(self):
+		master_coach, coach, users = setUp()
+		expected_infection_count, infected_count = test_infection(users[1], fake=True)
+		self.assertEqual(expected_infection_count, infected_count)
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
-
-
-
 
