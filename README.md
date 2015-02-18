@@ -16,5 +16,5 @@ For my version of Limited Infection, I implemented a fake_infect_users version o
 
 I considered writing the solution in pure Python (without Flask), yet chose the web route so I could create a more realistic example of the real-world implementation. I hope that is ok (the instructions were vague on this)!
 
-I'm looking forward to the code review (and only a little scared)! 
+I'm looking forward to the code review (and only a little scared (: ).
 
