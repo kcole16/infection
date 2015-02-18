@@ -38,6 +38,7 @@ def make_fake_relationships():
     students = users[num_coaches:]
     students_per_coach = len(students)/len(coaches)
     students_left = len(students)
+    
     for coach in coaches:
         count = 0
         while count < students_per_coach:
@@ -52,6 +53,7 @@ def make_fake_relationships():
 def generate_fake_users(number, test_case=False):
     fake_users = []
     fake_user_count = 0
+    
     while (fake_user_count < int(number)):
         if test_case:
             fake_user = User(test_case=True)
@@ -60,6 +62,7 @@ def generate_fake_users(number, test_case=False):
         fake_user.save()
         fake_users.append(fake_user)
         fake_user_count += 1
+        
     return fake_users
 
 def estimate_infection(user_id):
