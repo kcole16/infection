@@ -21,7 +21,7 @@ app.url_map.converters['regex'] = RegexConverter
 @app.route('/', methods=['GET', 'POST'])
 def coaches():
     users = User.objects.all()
-    num_infected = len(User.objects.filter(infected=True))
+    num_infected = User.objects.filter(infected=True).count()
     coaches = [user for user in users if user.coaches != []]
     
     return render_template('coaches.html', coaches=coaches, num_infected=num_infected)
@@ -77,7 +77,7 @@ def clear_users():
 
 @app.route('/create_fake_users/', methods=['GET'])
 def create_fake_users():
-    fake_user_count = len(utils.generate_fake_users(100))
+    fake_user_count = utils.generate_fake_users(100).count()
     utils.make_fake_relationships()
 
     return jsonify(fake_users=fake_user_count)
