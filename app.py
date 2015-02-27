@@ -44,6 +44,7 @@ def make_fake_relationships():
 def estimate_infection():
     user = request.args['user']
     number_infected = utils.estimate_infection(user)
+    infected = utils.build_limited_infection(53)
     return jsonify(infected=number_infected)
 
 @app.route('/start_infection/', methods=['GET'])
@@ -73,6 +74,7 @@ def clear_users():
 def create_fake_users():
     fake_user_count = len(utils.generate_fake_users(100))
     utils.make_fake_relationships()
+    utils.build_clusters()
 
     return jsonify(fake_users=fake_user_count)
 

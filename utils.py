@@ -89,13 +89,47 @@ def start_infection(user_id, fake=False):
     return number_infected
 
 def estimate_infection(user_id):
+    infection_reach = len(User.objects.get(id=user_id).cluster)+1
+
+    return infection_reach
+
+def fake_infection(user_id):
     '''Runs infect() with fake=True flag, 
     counts magnitude of infection, disinfects'''
 
     start_infection(user_id, fake=True)
-    number_infected = len(User.objects.filter(fake_infected=True))
-    disinfect(fake=True)
-    return number_infected
+    fake_infected = User.objects.filter(fake_infected=True)
+    # disinfect(fake=True)
+    return fake_infected
+
+def build_clusters():
+    users = User.objects.all()
+    for user in users:
+        if user.cluster == []:
+            fake_infected = fake_infection(user.id)
+            new_cluster = [infected for infected in fake_infected if infected.id != user.id]
+            user.cluster.extend(new_cluster)
+            user.save()
+        disinfect(fake=True)            
+
+def build_limited_infection(desired_infection):
+    users = User.objects.all()
+    users_to_infect = []
+    i = 0
+    while len(users_to_infect) < desired_infection:
+        if users[i] not in users_to_infect:
+            before_diff = desired_infection - len(users_to_infect)
+            after_diff = abs((len(users_to_infect) + len(users[i].cluster))-desired_infection)
+            if before_diff < after_diff:
+                break
+            else:
+                print before_diff, after_diff
+                users_to_infect.extend(users[i].cluster)
+        i += 1
+    return users_to_infect
+
+
+
 
 
 

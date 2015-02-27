@@ -9,6 +9,7 @@ class User(db.Document):
     coaches = db.ListField(db.ReferenceField('User'))
     is_coached_by = db.ListField(db.ReferenceField('User'))
     test_case = db.BooleanField(default=False)
+    cluster = db.ListField(db.ReferenceField('User'))
 
     meta = {
         'indexes': ['coaches', 'is_coached_by'],
@@ -86,6 +87,7 @@ class User(db.Document):
             self.infected = True
             self.save()
             self._infect_related()
+
 
 
 
