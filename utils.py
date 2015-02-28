@@ -124,7 +124,7 @@ def build_limited_infection(desired_infection, test_case=False):
     if test_case:
         all_users = User.objects.filter(test_case=True)
     else:
-        all_users = User.objects.all()
+        all_users = User.objects.filter(infected=False)
     users = sorted(all_users, key=lambda x: len(x.cluster)) # sort by cluster size
     users_to_infect = []
     i = 0

@@ -79,8 +79,8 @@ def create_fake_users():
 
 @app.route('/limited_infection/', methods=['POST'])
 def limited_infection():
-    desired_infection = int(request.form['desired_infection'])
-    users_to_infect = utils.build_limited_infection(desired_infection)
+    desired_infection = request.form['desired_infection']
+    users_to_infect = utils.build_limited_infection(int(desired_infection))
     utils.infect_users(users_to_infect)
 
     return jsonify(users_infected=len(users_to_infect))
