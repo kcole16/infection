@@ -75,6 +75,7 @@ class User(db.Document):
                     user.infect(fake=True)
         else:
             print "Done"
+            
 
     def infect(self, fake=False):
         '''Starts infection with parent User'''

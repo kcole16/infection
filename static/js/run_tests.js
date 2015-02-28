@@ -10,6 +10,19 @@
             }
           });
      });
+    $('.btn').click( function() {
+        $.ajax({
+            url: '/limited_infection/',
+            type: 'post',
+            data: $('form').serialize(),
+            dataType: 'json',
+            success: function(response){
+                console.log(response);
+                location.reload();
+                // $('.infected').text(response['total_infected'])
+            }
+          });
+     });
     $('.total_infection').click( function() {
         $.ajax({
             url: '/total_infection/',

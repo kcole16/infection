@@ -89,8 +89,9 @@ def start_infection(user_id, fake=False):
     return number_infected
 
 def estimate_infection(user_id):
-    infection_reach = len(User.objects.get(id=user_id).cluster)+1
+    '''Counts cluster of user to estimate infection reach'''
 
+    infection_reach = len(User.objects.get(id=user_id).cluster)+1
     return infection_reach
 
 def fake_infection(user_id):
@@ -99,10 +100,11 @@ def fake_infection(user_id):
 
     start_infection(user_id, fake=True)
     fake_infected = User.objects.filter(fake_infected=True)
-    # disinfect(fake=True)
     return fake_infected
 
 def build_clusters():
+    '''Construct relationship structure for all users'''
+
     users = User.objects.all()
     for user in users:
         if user.cluster == []:
@@ -113,6 +115,9 @@ def build_clusters():
         disinfect(fake=True)            
 
 def build_limited_infection(desired_infection):
+    '''Return list of users to infect to reach desired 
+    number of infected'''
+
     users = User.objects.all()
     users_to_infect = []
     i = 0
@@ -123,10 +128,18 @@ def build_limited_infection(desired_infection):
             if before_diff < after_diff:
                 break
             else:
-                print before_diff, after_diff
                 users_to_infect.extend(users[i].cluster)
+                users_to_infect.append(users[i])
         i += 1
+
     return users_to_infect
+
+def infect_users(users_to_infect):
+    '''Infects list of users'''
+
+    for user in users_to_infect:
+        user.infected = True
+        user.save()
 
 
 

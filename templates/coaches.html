@@ -17,6 +17,14 @@
           <h1>Infection</h1><br>
           <p class="lead">A/B Testing Simulator</p>
           {% if coaches != [] %}
+          <form>
+            <div class="form-group">
+              <label for="desired_infection">Desired infection (limited):</label>
+              <input type="text" class="form-control" name="desired_infection" placeholder="Enter a number">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+          <br>
           <label>{{ num_infected }} Users Infected</label><br>
           <div class="list-group">
           {% for coach in coaches %}
@@ -26,17 +34,17 @@
               <a href="/coach/{{ coach.id }}/" class="list-group-item" >User (coach) </a>
             {% endif %}
           {% endfor %}
-        </div><br>
-        <button class="btn btn-success total_infection">Infect All</button>
-        <button class="btn btn-success disinfect">Disinfect All</button>
-        <br>
-        <br>
-        <button class="btn btn-danger clear">Clear Users</button>
-        <br>
+          </div><br>
+          <button class="btn btn-success total_infection">Infect All</button>
+          <button class="btn btn-success disinfect">Disinfect All</button>
+          <br>
+          <br>
+          <button class="btn btn-danger clear">Clear Users</button>
+          <br>
 
-        {% else %}
-        <button class="btn btn-success make_users">Generate fake users</button>
-        {% endif %}
+          {% else %}
+          <button class="btn btn-success make_users">Generate fake users</button>
+          {% endif %}
         <br>
           <div class="container">
           </div>
