@@ -117,11 +117,15 @@ def build_clusters(test_case=False):
             user.save()
         disinfect(fake=True)            
 
-def build_limited_infection(desired_infection):
+def build_limited_infection(desired_infection, test_case=False):
     '''Return list of users to infect to reach desired 
     number of infected'''
 
-    users = User.objects.all()
+    if test_case:
+        all_users = User.objects.filter(test_case=True)
+    else:
+        all_users = User.objects.all()
+    users = sorted(all_users, key=lambda x: len(x.cluster)) # sort by cluster size
     users_to_infect = []
     i = 0
     while len(users_to_infect) < desired_infection:

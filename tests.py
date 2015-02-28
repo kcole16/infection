@@ -87,20 +87,11 @@ class InfectionTest(unittest.TestCase):
 		expected_infection_count, infected_count = test_infection(users[1], fake=True)
 		self.assertEqual(expected_infection_count, infected_count)
 
-	def testBuildLimitedInfectionLess(self):
-		'''Tests limited infection with < number of users'''
+	def testBuildLimitedInfection(self):
+		'''Tests limited infection'''
 
 		master_coach, coach, users = setUp()
-		infected_count = len(build_limited_infection(3))
-		expected_infection_count = User.objects.filter(test_case=True).count()
-		tearDown()
-		self.assertEqual(expected_infection_count, infected_count)
-
-	def testBuildLimitedInfectionMore(self):
-		'''Tests limited infection with > number of users'''
-		
-		master_coach, coach, users = setUp()
-		infected_count = len(build_limited_infection(7))
+		infected_count = len(build_limited_infection(3, test_case=True))
 		expected_infection_count = User.objects.filter(test_case=True).count()
 		tearDown()
 		self.assertEqual(expected_infection_count, infected_count)
