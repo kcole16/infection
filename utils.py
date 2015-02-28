@@ -102,10 +102,13 @@ def fake_infection(user_id):
     fake_infected = User.objects.filter(fake_infected=True)
     return fake_infected
 
-def build_clusters():
+def build_clusters(test_case=False):
     '''Construct relationship structure for all users'''
 
-    users = User.objects.all()
+    if test_case:
+        users = User.objects.filter(test_case=True)
+    else:
+        users = User.objects.all()
     for user in users:
         if user.cluster == []:
             fake_infected = fake_infection(user.id)
