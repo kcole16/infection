@@ -130,8 +130,13 @@ def build_limited_infection(desired_infection, test_case=False):
     i = 0
     while len(users_to_infect) < desired_infection:
         if users[i] not in users_to_infect:
-            users_to_infect.extend(users[i].cluster)
-            users_to_infect.append(users[i])
+            before_diff = desired_infection - len(users_to_infect)
+            after_diff = abs((len(users_to_infect) + len(users[i].cluster))-desired_infection)
+            if before_diff < after_diff:
+                break
+            else:
+                users_to_infect.extend(users[i].cluster)
+                users_to_infect.append(users[i])
         i += 1
 
     return users_to_infect
